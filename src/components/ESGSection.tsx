@@ -2,7 +2,11 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import { Assess, Align, Act } from 'lucide-react';
+import { 
+  AlignJustify, 
+  AlignCenter, 
+  AlignLeft 
+} from 'lucide-react';
 
 const ESGSection = () => {
   const navigate = useNavigate();
@@ -20,7 +24,7 @@ const ESGSection = () => {
         <div className="grid md:grid-cols-3 gap-8 mb-16">
           <div className="impact-card flex flex-col items-center text-center">
             <div className="p-4 bg-blue-50 dark:bg-blue-900/30 rounded-full mb-6">
-              <Assess size={48} className="text-brand-cyan" />
+              <AlignLeft size={48} className="text-brand-cyan" />
             </div>
             <h3 className="text-xl font-bold mb-4">Assess</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
@@ -50,7 +54,7 @@ const ESGSection = () => {
 
           <div className="impact-card flex flex-col items-center text-center">
             <div className="p-4 bg-green-50 dark:bg-green-900/30 rounded-full mb-6">
-              <Align size={48} className="text-brand-green" />
+              <AlignCenter size={48} className="text-brand-green" />
             </div>
             <h3 className="text-xl font-bold mb-4">Align</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
@@ -80,7 +84,7 @@ const ESGSection = () => {
 
           <div className="impact-card flex flex-col items-center text-center">
             <div className="p-4 bg-cyan-50 dark:bg-cyan-900/30 rounded-full mb-6">
-              <Act size={48} className="text-brand-cyan" />
+              <AlignJustify size={48} className="text-brand-cyan" />
             </div>
             <h3 className="text-xl font-bold mb-4">Act</h3>
             <p className="text-gray-600 dark:text-gray-300 mb-4">
