@@ -65,7 +65,7 @@ export default {
 				},
 				brand: {
 					cyan: '#00FFFF',
-					green: '#00B060',
+					green: '#2AFEB7',  /* Updated to #2AFEB7 from #00B060 */
 					white: '#FFFFFF',
 					dark: '#333333',
 					light: '#F8F8F8',
