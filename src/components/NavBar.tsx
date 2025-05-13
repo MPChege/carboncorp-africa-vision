@@ -1,63 +1,108 @@
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+import { Link, useLocation } from 'react-router-dom';
+import { logo } from '@/App';
 import { Menu, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useMobile } from '@/hooks/use-mobile';
 
 const NavBar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+  const isMobile = useMobile();
+  
+  const isActive = (path: string) => location.pathname === path;
+  
+  const navItems = [
+    { name: 'Home', path: '/' },
+    { name: 'ESG', path: '/esg' },
+    { name: 'Carbon', path: '/carbon' },
+    { name: 'Dashboard', path: '/dashboard' },
+    { name: 'About', path: '/about' },
+  ];
 
   return (
-    <nav className="py-4 px-6 md:px-16 bg-white dark:bg-slate-900 sticky top-0 z-50 shadow-sm">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
-        <Link to="/" className="flex items-center space-x-2">
-          <span className="text-2xl font-bold text-brand-dark dark:text-white">
-            Carbon<span className="text-brand-green">Corp</span>
-          </span>
-        </Link>
-
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-8">
-          <Link to="/" className="text-gray-700 dark:text-gray-300 hover:text-brand-cyan transition-colors">Home</Link>
-          <Link to="/esg" className="text-gray-700 dark:text-gray-300 hover:text-brand-cyan transition-colors">ESG Impact Hub</Link>
-          <Link to="/carbon" className="text-gray-700 dark:text-gray-300 hover:text-brand-cyan transition-colors">Carbon Platform</Link>
-          <Link to="/dashboard" className="text-gray-700 dark:text-gray-300 hover:text-brand-cyan transition-colors">Dashboard</Link>
-          <Link to="/about" className="text-gray-700 dark:text-gray-300 hover:text-brand-cyan transition-colors">About</Link>
-          <Link to="/contact" className="text-gray-700 dark:text-gray-300 hover:text-brand-cyan transition-colors">Contact</Link>
-        </div>
-
-        {/* Desktop CTA */}
-        <div className="hidden md:flex items-center space-x-4">
-          <Button variant="outline" className="btn-outline">Login</Button>
-          <Button className="btn-primary">Get Started</Button>
-        </div>
-
-        {/* Mobile Menu Button */}
-        <button className="md:hidden p-2" onClick={toggleMenu}>
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
-
-      {/* Mobile Navigation */}
-      <div className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'} pt-4 pb-6 px-6 bg-white dark:bg-slate-900`}>
-        <div className="flex flex-col space-y-4">
-          <Link to="/" className="text-gray-700 dark:text-gray-300 hover:text-brand-cyan transition-colors" onClick={toggleMenu}>Home</Link>
-          <Link to="/esg" className="text-gray-700 dark:text-gray-300 hover:text-brand-cyan transition-colors" onClick={toggleMenu}>ESG Impact Hub</Link>
-          <Link to="/carbon" className="text-gray-700 dark:text-gray-300 hover:text-brand-cyan transition-colors" onClick={toggleMenu}>Carbon Platform</Link>
-          <Link to="/dashboard" className="text-gray-700 dark:text-gray-300 hover:text-brand-cyan transition-colors" onClick={toggleMenu}>Dashboard</Link>
-          <Link to="/about" className="text-gray-700 dark:text-gray-300 hover:text-brand-cyan transition-colors" onClick={toggleMenu}>About</Link>
-          <Link to="/contact" className="text-gray-700 dark:text-gray-300 hover:text-brand-cyan transition-colors" onClick={toggleMenu}>Contact</Link>
+    <nav className="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
+      <div className="container mx-auto px-6">
+        <div className="flex justify-between items-center h-16">
+          <Link to="/" className="flex items-center">
+            <img 
+              src={logo.src} 
+              alt={logo.alt}
+              className="h-10 w-auto mr-3" 
+            />
+            <span className="text-xl font-bold text-gray-800 dark:text-white">CarbonCorp</span>
+          </Link>
           
-          <div className="flex flex-col space-y-3 pt-4">
-            <Button variant="outline" className="btn-outline w-full">Login</Button>
-            <Button className="btn-primary w-full">Get Started</Button>
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-4">
+            {navItems.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  isActive(item.path)
+                    ? 'text-brand-cyan'
+                    : 'text-gray-600 dark:text-gray-300 hover:text-brand-cyan dark:hover:text-brand-cyan'
+                }`}
+              >
+                {item.name}
+              </Link>
+            ))}
+            <Button 
+              variant="default" 
+              className="bg-brand-green text-white hover:bg-opacity-90"
+              asChild
+            >
+              <Link to="/contact">Contact Us</Link>
+            </Button>
+          </div>
+          
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-600 dark:text-gray-300 hover:text-brand-cyan dark:hover:text-brand-cyan focus:outline-none"
+            >
+              {isOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </button>
           </div>
         </div>
       </div>
+      
+      {/* Mobile Navigation */}
+      {isOpen && isMobile && (
+        <div className="md:hidden bg-white dark:bg-gray-900 py-2 px-4 border-t border-gray-200 dark:border-gray-800">
+          <div className="flex flex-col space-y-2">
+            {navItems.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`px-3 py-2 rounded-md text-base font-medium ${
+                  isActive(item.path)
+                    ? 'text-brand-cyan'
+                    : 'text-gray-600 dark:text-gray-300 hover:text-brand-cyan'
+                }`}
+                onClick={() => setIsOpen(false)}
+              >
+                {item.name}
+              </Link>
+            ))}
+            <Button 
+              variant="default" 
+              className="bg-brand-green text-white hover:bg-opacity-90 mt-2"
+              asChild
+              onClick={() => setIsOpen(false)}
+            >
+              <Link to="/contact">Contact Us</Link>
+            </Button>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };
