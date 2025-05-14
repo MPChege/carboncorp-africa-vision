@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { logo } from '@/App';
@@ -16,7 +17,7 @@ const NavBar = () => {
     { name: 'Home', path: '/' },
     { name: 'ESG', path: '/esg' },
     { name: 'Carbon', path: '/carbon' },
-    { name: 'Dashboard', path: '/dashboard' },
+    { name: 'Dashboard', path: 'https://carbon-corp-esg.vercel.app/analytics', external: true },
     { name: 'About', path: '/about' },
   ];
 
@@ -36,17 +37,33 @@ const NavBar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-4">
             {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  isActive(item.path)
-                    ? 'text-brand-cyan'
-                    : 'text-gray-600 dark:text-gray-300 hover:text-brand-cyan dark:hover:text-brand-cyan'
-                }`}
-              >
-                {item.name}
-              </Link>
+              item.external ? (
+                <a
+                  key={item.path}
+                  href={item.path}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                    isActive('/dashboard')
+                      ? 'text-brand-cyan'
+                      : 'text-gray-600 dark:text-gray-300 hover:text-brand-cyan dark:hover:text-brand-cyan'
+                  }`}
+                >
+                  {item.name}
+                </a>
+              ) : (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                    isActive(item.path)
+                      ? 'text-brand-cyan'
+                      : 'text-gray-600 dark:text-gray-300 hover:text-brand-cyan dark:hover:text-brand-cyan'
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              )
             ))}
             <Button 
               variant="default" 
@@ -78,18 +95,35 @@ const NavBar = () => {
         <div className="md:hidden bg-white dark:bg-gray-900 py-2 px-4 border-t border-gray-200 dark:border-gray-800">
           <div className="flex flex-col space-y-2">
             {navItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`px-3 py-2 rounded-md text-base font-medium ${
-                  isActive(item.path)
-                    ? 'text-brand-cyan'
-                    : 'text-gray-600 dark:text-gray-300 hover:text-brand-cyan'
-                }`}
-                onClick={() => setIsOpen(false)}
-              >
-                {item.name}
-              </Link>
+              item.external ? (
+                <a
+                  key={item.path}
+                  href={item.path}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`px-3 py-2 rounded-md text-base font-medium ${
+                    isActive('/dashboard')
+                      ? 'text-brand-cyan'
+                      : 'text-gray-600 dark:text-gray-300 hover:text-brand-cyan'
+                  }`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.name}
+                </a>
+              ) : (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`px-3 py-2 rounded-md text-base font-medium ${
+                    isActive(item.path)
+                      ? 'text-brand-cyan'
+                      : 'text-gray-600 dark:text-gray-300 hover:text-brand-cyan'
+                  }`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              )
             ))}
             <Button 
               variant="default" 

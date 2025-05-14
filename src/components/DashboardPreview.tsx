@@ -1,11 +1,7 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
 
 const DashboardPreview = () => {
-  const navigate = useNavigate();
-
   return (
     <section className="section-padding bg-gray-900 text-white">
       <div className="container mx-auto px-6">
@@ -139,14 +135,14 @@ const DashboardPreview = () => {
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Button
               className="btn-primary text-lg"
-              onClick={() => navigate('/dashboard')}
+              onClick={() => window.open('https://carbon-corp-esg.vercel.app/analytics', '_blank')}
             >
               View Live Demo
             </Button>
             <Button
               variant="outline"
               className="border-2 border-white text-white hover:bg-white hover:text-black text-lg"
-              onClick={() => navigate('/dashboard')}
+              onClick={() => window.open('https://carbon-corp-esg.vercel.app/analytics', '_blank')}
             >
               Login to Sandbox
             </Button>
